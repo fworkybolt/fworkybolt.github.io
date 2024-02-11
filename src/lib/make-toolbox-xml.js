@@ -756,40 +756,40 @@ const comments = function (colors) {
         <block type="comments_hat">
             <value name="COMMENT">
                 <shadow type="text">
-                    <field name="COMMENT">""</field>
+                    <field name="TEXT"></field>
                 </shadow>
             </value>
         </block>
         <block type="comments_command">
             <value name="COMMENT">
                 <shadow type="text">
-                    <field name="COMMENT">""</field>
+                    <field name="TEXT"></field>
                 </shadow>
             </value>
         </block>
         <block type="comments_loop">
             <value name="COMMENT">
                 <shadow type="text">
-                    <field name="COMMENT">""</field>
+                    <field name="TEXT"></field>
                 </shadow>
             </value>
         </block>
         <block type="comments_reporter">
             <value name="VALUE">
                 <shadow type="text">
-                    <field name="VALUE">""</field>
+                    <field name="VALUE"></field>
                 </shadow>
             </value>
             <value name="COMMENT">
                 <shadow type="text">
-                    <field name="COMMENT">""</field>
+                    <field name="TEXT"></field>
                 </shadow>
             </value>
         </block>
         <block type="comments_boolean">
             <value name="COMMENT">
                 <shadow type="text">
-                    <field name="COMMENT">""</field>
+                    <field name="TEXT"></field>
                 </shadow>
             </value>
         </block>
