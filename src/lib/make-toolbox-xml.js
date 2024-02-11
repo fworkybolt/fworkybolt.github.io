@@ -745,6 +745,59 @@ const myBlocks = function (isInitialSetup, isStage, targetId, colors) {
     `;
 };
 
+const comments = function (colors) {
+    // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    return `
+    <category
+        name="%{BKY_CATEGORY_COMMENTS}"
+        id="comments"
+        colour="${colors.primary}"
+        secondaryColour="${colors.tertiary}">
+        <block type="comments_hat">
+            <value name="COMMENT">
+                <shadow type="text">
+                    <field name="COMMENT">""</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="comments_command">
+            <value name="COMMENT">
+                <shadow type="text">
+                    <field name="COMMENT">""</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="comments_loop">
+            <value name="COMMENT">
+                <shadow type="text">
+                    <field name="COMMENT">""</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="comments_reporter">
+            <value name="VALUE">
+                <shadow type="text">
+                    <field name="VALUE">""</field>
+                </shadow>
+            </value>
+            <value name="COMMENT">
+                <shadow type="text">
+                    <field name="COMMENT">""</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="comments_boolean">
+            <value name="COMMENT">
+                <shadow type="text">
+                    <field name="COMMENT">""</field>
+                </shadow>
+            </value>
+        </block>
+        ${categorySeparator}
+    </category>
+    `;
+};
+
 // eslint-disable-next-line max-len
 const extraTurboWarpBlocks = `
 <block type="argument_reporter_boolean"><field name="VALUE">is compiled?</field></block>
@@ -800,6 +853,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     const operatorsXML = moveCategory('operators') || operators(isInitialSetup, isStage, targetId, colors.operators);
     const variablesXML = moveCategory('data') || variables(isInitialSetup, isStage, targetId, colors.data);
     const myBlocksXML = moveCategory('procedures') || myBlocks(isInitialSetup, isStage, targetId, colors.more);
+    const commentsXML = moveCategory('comments') || comments(colors.comments);
 
     // Always display TurboWarp blocks as the first extension, if it exists,
     // and also add an "is compiled?" block to the top.
@@ -818,7 +872,8 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         sensingXML, gap,
         operatorsXML, gap,
         variablesXML, gap,
-        myBlocksXML
+        myBlocksXML, gap,
+        commentsXML
     ];
 
     if (turbowarpXML) {
