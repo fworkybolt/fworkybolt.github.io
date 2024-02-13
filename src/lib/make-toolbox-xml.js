@@ -777,7 +777,7 @@ const comments = function (colors) {
         <block type="comments_reporter">
             <value name="VALUE">
                 <shadow type="text">
-                    <field name="VALUE"></field>
+                    <field name="TEXT"></field>
                 </shadow>
             </value>
             <value name="COMMENT">
