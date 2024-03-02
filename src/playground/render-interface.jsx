@@ -67,7 +67,7 @@ const handleClickAddonSettings = addonId => {
 
 const messages = defineMessages({
     defaultTitle: {
-        defaultMessage: 'Beyond the Limitations', // TODO: Temporary?
+        defaultMessage: 'Beyond Limitations', // TODO: Temporary?
         description: 'Title of homepage',
         id: 'tw.guiDefaultTitle'
     }
