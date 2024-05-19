@@ -33,7 +33,7 @@ import ChangeUsername from '../../containers/tw-change-username.jsx';
 import CloudVariablesToggler from '../../containers/tw-cloud-toggler.jsx';
 import TWSaveStatus from './tw-save-status.jsx';
 
-import {openTipsLibrary, openSettingsModal, openRestorePointModal} from '../../reducers/modals';
+import {openTipsLibrary, openExtensionManagerModal, openSettingsModal, openRestorePointModal} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
 import {
     isTimeTravel220022BC,
@@ -807,6 +807,13 @@ class MenuBar extends React.Component {
                                     )}</CloudVariablesToggler>
                                 </MenuSection>
                                 <MenuSection>
+                                    <MenuItem onClick={this.props.onClickExtensionManagerModal}>
+                                        <FormattedMessage
+                                            defaultMessage="Extension Manager"
+                                            description="Menu bar item for the extension manager"
+                                            id="tw.menuBar.extensionManager"
+                                        />
+                                    </MenuItem>
                                     <MenuItem onClick={this.props.onClickSettingsModal}>
                                         <FormattedMessage
                                             defaultMessage="Advanced Settings"
@@ -1091,6 +1098,7 @@ MenuBar.propTypes = {
     onClickSave: PropTypes.func,
     onClickSaveAsCopy: PropTypes.func,
     onClickSettings: PropTypes.func,
+    onClickExtensionManagerModal: PropTypes.func,
     onClickSettingsModal: PropTypes.func,
     onLogOut: PropTypes.func,
     onOpenRegistration: PropTypes.func,
@@ -1181,6 +1189,10 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseAbout: () => dispatch(closeAboutMenu()),
     onClickRestorePoints: () => dispatch(openRestorePointModal()),
     onClickSettings: () => dispatch(openSettingsMenu()),
+    onClickExtensionManagerModal: () => {
+        dispatch(closeEditMenu());
+        dispatch(openExtensionManagerModal());
+    },
     onClickSettingsModal: () => {
         dispatch(closeEditMenu());
         dispatch(openSettingsModal());
