@@ -30,7 +30,7 @@
     background-image: url("../delete-button/icon--delete.svg");
     appearance: none;
     width: 20px;
-    height:  20px;
+    height: 20px;
     background-color: $looks-secondary;
     background-size: 100%;
     border: 1px solid $ui-black-transparent;
@@ -42,4 +42,49 @@
 .delete-option:hover {
     border: 1px solid $looks-secondary;
     box-shadow: 0px 0px 0px 4px $looks-transparent;
+}
+
+.checkbox-option {
+    width: 20px;
+    height: 20px;
+    transition: all 0.2s;
+}
+
+.checkbox-option:hover {
+    border: 1px solid $looks-secondary;
+    box-shadow: 0px 0px 0px 4px $looks-transparent;
+}
+
+.multi-select-row {
+    margin-top: 1rem;
+    font-weight: bolder;
+    text-align: right;
+}
+
+.multi-select-normal {
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    background: white;
+    color: black;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.multi-select-delete {
+    border: $looks-secondary;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    background: $looks-secondary;
+    color: white;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+[dir="ltr"] .multi-select-normal + .multi-select-delete {
+    margin-left: 0.5rem;
+}
+
+[dir="rtl"] .multi-select-normal + .multi-select-delete {
+    margin-right: 0.5rem;
 }

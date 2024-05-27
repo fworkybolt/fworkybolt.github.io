@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
+import FancyCheckbox from '../tw-fancy-checkbox/checkbox.jsx';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
 import styles from './extension-manager-modal.css';
@@ -13,11 +14,6 @@ const messages = defineMessages({
         id: 'nb.extensionManager.title'
     }
 });
-
-const handleRemoveExtension = (props, extension) => {
-    props.vm.extensionManager.removeExtension(extension);
-    props.onClose();
-}
 
 const ExtensionManagerModal = props => {
     const [loadedExtensions, setLoadedExtensions] = useState(Array.from(props.vm.extensionManager._loadedExtensions));
@@ -43,12 +39,48 @@ const ExtensionManagerModal = props => {
                 {loadedExtensions.map((extension, index) => (
                     <div className={styles.extensionCard} key={index}>
                         <p>{extension[0]}</p>
-                        <button
-                            className={styles.deleteOption}
-                            onClick={() => handleRemoveExtension(props, extension[0])}>
-                        </button>
+                        {!props.multiSelect ?
+                            <button
+                                className={styles.deleteOption}
+                                onClick={() => props.removeExtension(extension[0])}
+                            >
+                            </button>
+                        :
+                            <FancyCheckbox
+                                className={styles.checkboxOption}
+                                onChange={props.updateExtensionList}
+                                value={extension[0]}
+                            >
+                            </FancyCheckbox>
+                        }
                     </div>
                 ))}
+                {(!(loadedExtensions.length == 0) && !props.multiSelect) && (
+                    <Box className={styles.multiSelectRow}>
+                        <button
+                            className={styles.multiSelectNormal}
+                            onClick={props.changeMultiSelectState}
+                        >
+                            Select Multiple
+                        </button>
+                    </Box>
+                )}
+                {props.multiSelect && (
+                    <Box className={styles.multiSelectRow}>
+                        <button
+                            className={styles.multiSelectNormal}
+                            onClick={props.changeMultiSelectState}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            className={styles.multiSelectDelete}
+                            onClick={() => props.removeExtensions(props.extensions)}
+                        >
+                            Delete
+                        </button>
+                    </Box>
+                )}
             </Box>
         </Modal>
     );

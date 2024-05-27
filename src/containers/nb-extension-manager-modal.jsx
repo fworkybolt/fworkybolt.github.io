@@ -9,10 +9,47 @@ import ExtensionManagerModalComponent from '../components/nb-extension-manager-m
 class NBExtensionManagerModal extends React.Component {
     constructor (props) {
         super(props);
-        bindAll(this, 'handleClose');
+        bindAll(this, [
+            'handleClose',
+            'removeExtension',
+            'handleMultiSelectState',
+            'updateExtensionList',
+            'removeExtensions'
+        ]);
+        this.state = {
+            multiSelect: false,
+            extensions: []
+        };
     }
 
     handleClose () {
+        this.props.onClose();
+    }
+
+    removeExtension = (extension) => {
+        this.props.vm.extensionManager.removeExtension(extension);
+        this.props.onClose();
+    }
+
+    handleMultiSelectState () {
+        if (!this.state.multiSelect) {
+            this.setState({extensions: []});
+        }
+        this.setState({multiSelect: !this.state.multiSelect});
+    }
+
+    updateExtensionList (checkbox) {
+        if (checkbox.target.checked) {
+            this.setState({extensions: [...this.state.extensions, checkbox.target.value]});
+        } else {
+            this.setState({extensions: this.state.extensions.filter(extension => extension !== checkbox.target.value)});
+        }
+    }
+
+    removeExtensions = (extensions) => {
+        extensions.forEach((extension) => {
+            this.props.vm.extensionManager.removeExtension(extension);
+        })
         this.props.onClose();
     }
 
@@ -20,6 +57,12 @@ class NBExtensionManagerModal extends React.Component {
         return (
             <ExtensionManagerModalComponent
                 onClose={this.handleClose}
+                removeExtension={this.removeExtension}
+                changeMultiSelectState={this.handleMultiSelectState}
+                multiSelect={this.state.multiSelect}
+                updateExtensionList={this.updateExtensionList}
+                extensions={this.state.extensions}
+                removeExtensions={this.removeExtensions}
                 vm={this.props.vm}
             />
         );
