@@ -26,7 +26,7 @@ class NBExtensionManagerModal extends React.Component {
         this.props.onClose();
     }
 
-    removeExtension = (extension) => {
+    removeExtension (extension) {
         this.props.vm.extensionManager.removeExtension(extension);
         this.props.onClose();
     }
@@ -46,7 +46,7 @@ class NBExtensionManagerModal extends React.Component {
         }
     }
 
-    removeExtensions = (extensions) => {
+    removeExtensions (extensions) {
         extensions.forEach((extension) => {
             this.props.vm.extensionManager.removeExtension(extension);
         })
