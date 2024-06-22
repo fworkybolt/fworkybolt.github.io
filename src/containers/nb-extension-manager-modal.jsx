@@ -14,10 +14,16 @@ class NBExtensionManagerModal extends React.Component {
             'removeExtension',
             'handleMultiSelectState',
             'updateExtensionList',
-            'removeExtensions'
+            'removeExtensions',
+            'handleDragStart',
+            'handleDragEnd',
+            'handleDragOver',
+            'handleDrop'
         ]);
         this.state = {
             multiSelect: false,
+            draggable: true,
+            dragging: null,
             extensions: []
         };
     }
@@ -33,7 +39,10 @@ class NBExtensionManagerModal extends React.Component {
 
     handleMultiSelectState () {
         if (!this.state.multiSelect) {
+            this.setState({draggable: false});
             this.setState({extensions: []});
+        } else {
+            this.setState({draggable: true});
         }
         this.setState({multiSelect: !this.state.multiSelect});
     }
@@ -53,6 +62,22 @@ class NBExtensionManagerModal extends React.Component {
         this.props.onClose();
     }
 
+    handleDragStart (item) {
+        this.setState({dragging: item});
+    }
+
+    handleDragEnd () {
+        this.setState({dragging: null});
+    }
+
+    handleDragOver (e) {
+        e.preventDefault();
+    }
+
+    handleDrop (index) {
+        this.props.vm.extensionManager.reorderExtension(this.state.dragging, index);
+    }
+
     render () {
         return (
             <ExtensionManagerModalComponent
@@ -60,9 +85,14 @@ class NBExtensionManagerModal extends React.Component {
                 removeExtension={this.removeExtension}
                 changeMultiSelectState={this.handleMultiSelectState}
                 multiSelect={this.state.multiSelect}
+                draggable={this.state.draggable}
                 updateExtensionList={this.updateExtensionList}
                 extensions={this.state.extensions}
                 removeExtensions={this.removeExtensions}
+                handleDragStart={this.handleDragStart}
+                handleDragEnd={this.handleDragEnd}
+                handleDragOver={this.handleDragOver}
+                handleDrop={this.handleDrop}
                 vm={this.props.vm}
             />
         );
@@ -74,7 +104,8 @@ NBExtensionManagerModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     vm: PropTypes.shape({
         extensionManager: PropTypes.shape({
-            removeExtension: PropTypes.func
+            removeExtension: PropTypes.func,
+            reorderExtension: PropTypes.func
         })
     })
 };

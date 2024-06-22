@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
 import FancyCheckbox from '../tw-fancy-checkbox/checkbox.jsx';
@@ -17,6 +17,10 @@ const messages = defineMessages({
 
 const ExtensionManagerModal = props => {
     const [loadedExtensions, setLoadedExtensions] = useState(Array.from(props.vm.extensionManager._loadedExtensions));
+
+    useEffect(() => {
+        setLoadedExtensions(Array.from(props.vm.extensionManager._loadedExtensions));
+    }, [props.vm.extensionManager._loadedExtensions]);
 
     let loadedAmountText;
     if (loadedExtensions.length == 0) {
@@ -37,7 +41,15 @@ const ExtensionManagerModal = props => {
             <Box className={styles.body}>
                 <p>{loadedAmountText}</p>
                 {loadedExtensions.map((extension, index) => (
-                    <div className={styles.extensionCard} key={index}>
+                    <div
+                        className={styles.extensionCard}
+                        key={index}
+                        draggable={props.draggable}
+                        onDragStart={() => props.handleDragStart(index)}
+                        onDragEnd={props.handleDragEnd}
+                        onDragOver={props.handleDragOver}
+                        onDrop={() => props.handleDrop(index)}
+                    >
                         <p>{extension[0]}</p>
                         {!props.multiSelect ?
                             <button
@@ -91,7 +103,8 @@ ExtensionManagerModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     vm: PropTypes.shape({
         extensionManager: PropTypes.shape({
-            removeExtension: PropTypes.func
+            removeExtension: PropTypes.func,
+            reorderExtension: PropTypes.func
         })
     })
 };
