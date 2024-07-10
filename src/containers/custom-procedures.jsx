@@ -11,10 +11,11 @@ class CustomProcedures extends React.Component {
         super(props);
         bindAll(this, [
             'handleAddLabel',
-            'handleAddBoolean',
-            'handleAddTextNumber',
+            'handleAddInput',
             'handleAddColor',
             'handleToggleWarp',
+            'handlePropagation',
+            'handleInputMenuChange',
             'handleCancel',
             'handleOk',
             'setBlocks'
@@ -22,7 +23,8 @@ class CustomProcedures extends React.Component {
         this.state = {
             rtlOffset: 0,
             warp: false,
-            colour: "#000000"
+            colour: "#000000",
+            menuInput: "stringornumber"
         };
     }
     componentWillUnmount () {
@@ -124,14 +126,22 @@ class CustomProcedures extends React.Component {
             this.mutationRoot.addLabelExternal();
         }
     }
-    handleAddBoolean () {
+    handleAddInput () {
         if (this.mutationRoot) {
-            this.mutationRoot.addBooleanExternal();
-        }
-    }
-    handleAddTextNumber () {
-        if (this.mutationRoot) {
-            this.mutationRoot.addStringNumberExternal();
+            switch (this.state.menuInput) {
+                case "stringornumber": // To be split into string and number types on a later date
+                    this.mutationRoot.addStringNumberExternal();
+                    break;
+                case "boolean":
+                    this.mutationRoot.addBooleanExternal();
+                    break;
+                case "object":
+                    this.mutationRoot.addObjectExternal();
+                    break;
+                case "array":
+                    this.mutationRoot.addArrayExternal();
+                    break;
+            };
         }
     }
     handleAddColor (element) {
@@ -147,16 +157,24 @@ class CustomProcedures extends React.Component {
             this.setState({warp: newWarp});
         }
     }
+    handlePropagation (e) {
+        e.stopPropagation();
+    }
+    handleInputMenuChange (e) {
+        this.setState({menuInput: e.target.value});
+    }
     render () {
         return (
             <CustomProceduresComponent
                 componentRef={this.setBlocks}
                 warp={this.state.warp}
                 colour={this.state.colour}
-                onAddBoolean={this.handleAddBoolean}
+                onAddInput={this.handleAddInput}
                 onAddLabel={this.handleAddLabel}
-                onAddTextNumber={this.handleAddTextNumber}
                 setColor={this.handleAddColor}
+                handlePropagation={this.handlePropagation}
+                handleInputMenuChange={this.handleInputMenuChange}
+                menuOption={this.state.menuInput}
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
                 onToggleWarp={this.handleToggleWarp}

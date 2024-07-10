@@ -732,6 +732,142 @@ const variables = function (isInitialSetup, isStage, targetId, colors) {
     `;
 };
 
+const json = function (colors) {
+    const object = translate('JSON_OBJECT', '{"key":"value"}');
+    const array = translate('JSON_ARRAY', '["foo","bar"]')
+    const key = translate('JSON_KEY', 'key');
+    const bar = translate('JSON_BAR', 'bar');
+    const baz = translate('JSON_BAZ', 'baz');
+    // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    return `
+    <category
+        name="%{BKY_CATEGORY_JSON}"
+        id="json"
+        colour="${colors.primary}"
+        secondaryColour="${colors.tertiary}">
+        <block type="json_new_object">
+        </block>
+        <block type="json_to_object">
+            <value name="STR">
+                <shadow type="text">
+                    <field name="TEXT">${object}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="json_to_string">
+        </block>
+        ${blockSeparator}
+        <block type="json_keys">
+        </block>
+        <block type="json_values">
+        </block>
+        <block type="json_value_of_key">
+            <value name="KEY">
+                <shadow type="text">
+                    <field name="TEXT">${key}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="json_set_key">
+            <value name="KEY">
+                <shadow type="text">
+                    <field name="TEXT">${key}</field>
+                </shadow>
+            </value>
+            <value name="VALUE">
+                <shadow type="text">
+                    <field name="TEXT">${bar}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="json_delete_key">
+            <value name="KEY">
+                <shadow type="text">
+                    <field name="TEXT">${key}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="json_join_object">
+        </block>
+        <block type="json_has_key">
+            <value name="KEY">
+                <shadow type="text">
+                    <field name="TEXT">${key}</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="json_new_array">
+        </block>
+        <block type="json_to_array">
+            <value name="STR">
+                <shadow type="text">
+                    <field name="TEXT">${array}</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="json_value_of_index">
+            <value name="INDEX">
+                <shadow type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="json_index_of_value">
+            <value name="VALUE">
+                <shadow type="text">
+                    <field name="TEXT">${bar}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="json_add_item">
+            <value name="ITEM">
+                <shadow type="text">
+                    <field name="TEXT">${bar}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="json_replace_index">
+            <value name="INDEX">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="ITEM">
+                <shadow type="text">
+                    <field name="TEXT">${baz}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="json_delete_index">
+            <value name="INDEX">
+                <shadow type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="json_delete_all_occurrences">
+            <value name="ITEM">
+                <shadow type="text">
+                    <field name="TEXT">${bar}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="json_join_array">
+        </block>
+        <block type="json_has_item">
+            <value name="ITEM">
+                <shadow type="text">
+                    <field name="TEXT">${bar}</field>
+                </shadow>
+            </value>
+        </block>
+        ${categorySeparator}
+    </category>
+    `;
+};
+
 const myBlocks = function (isInitialSetup, isStage, targetId, colors) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
@@ -787,6 +923,20 @@ const comments = function (colors) {
             </value>
         </block>
         <block type="comments_boolean">
+            <value name="COMMENT">
+                <shadow type="text">
+                    <field name="TEXT"></field>
+                </shadow>
+            </value>
+        </block>
+        <block type="comments_object">
+            <value name="COMMENT">
+                <shadow type="text">
+                    <field name="TEXT"></field>
+                </shadow>
+            </value>
+        </block>
+        <block type="comments_array">
             <value name="COMMENT">
                 <shadow type="text">
                     <field name="TEXT"></field>
@@ -852,6 +1002,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     const sensingXML = moveCategory('sensing') || sensing(isInitialSetup, isStage, targetId, colors.sensing);
     const operatorsXML = moveCategory('operators') || operators(isInitialSetup, isStage, targetId, colors.operators);
     const variablesXML = moveCategory('data') || variables(isInitialSetup, isStage, targetId, colors.data);
+    const jsonXML = moveCategory('json') || json(colors.json);
     const myBlocksXML = moveCategory('procedures') || myBlocks(isInitialSetup, isStage, targetId, colors.more);
     const commentsXML = moveCategory('comments') || comments(colors.comments);
 
@@ -872,6 +1023,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         sensingXML, gap,
         operatorsXML, gap,
         variablesXML, gap,
+        jsonXML, gap,
         myBlocksXML, gap,
         commentsXML
     ];

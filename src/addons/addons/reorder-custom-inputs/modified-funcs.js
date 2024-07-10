@@ -1,7 +1,7 @@
 // https://github.com/scratchfoundation/scratch-blocks/blob/f210e042988b91bcdc2abeca7a2d85e178edadb2/blocks_vertical/procedures.js#L205
 export function modifiedCreateAllInputs(connectionMap) {
-  // Split the proc into components, by %n, %b, %s and %l (ignoring escaped).
-  var procComponents = this.procCode_.split(/(?=[^\\]%[nbsl])/);
+  // Split the proc into components, by %n, %b, %o, %a, %s and %l (ignoring escaped).
+  var procComponents = this.procCode_.split(/(?=[^\\]%[nboasl])/);
   procComponents = procComponents.map(function (c) {
     return c.trim(); // Strip whitespace.
   });
@@ -13,7 +13,7 @@ export function modifiedCreateAllInputs(connectionMap) {
     // Don't treat %l as an argument
     if (component.substring(0, 1) == "%" && component.substring(1, 2) !== "l") {
       var argumentType = component.substring(1, 2);
-      if (!(argumentType == "n" || argumentType == "b" || argumentType == "s")) {
+      if (!(argumentType == "n" || argumentType == "b" || argumentType == "o" || argumentType == "a" || argumentType == "s")) {
         throw new Error("Found an custom procedure with an invalid type: " + argumentType);
       }
       labelText = component.substring(2).trim();
@@ -23,6 +23,10 @@ export function modifiedCreateAllInputs(connectionMap) {
       var input = this.appendValueInput(id);
       if (argumentType == "b") {
         input.setCheck("Boolean");
+      } else if (argumentType == "o") {
+        input.setCheck("Object");
+      } else if (argumentType == "a") {
+        input.setCheck("Array");
       }
       this.populateArgument_(argumentType, argumentCount, connectionMap, id, input);
       argumentCount++;
@@ -57,6 +61,10 @@ export function modifiedUpdateDeclarationProcCode(prefixLabels = false) {
       this.argumentIds_.push(input.name);
       if (target.type == "argument_editor_boolean") {
         this.procCode_ += "%b";
+      } else if (target.type == "argument_editor_object") {
+        this.procCode_ += "%o";
+      } else if (target.type == "argument_editor_array") {
+        this.procCode_ += "%a";
       } else {
         this.procCode_ += "%s";
       }
