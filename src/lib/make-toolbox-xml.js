@@ -787,7 +787,7 @@ const json = function (colors) {
                 </shadow>
             </value>
         </block>
-        <block type="json_join_object">
+        <block type="json_merge_object">
         </block>
         <block type="json_has_key">
             <value name="KEY">
@@ -854,7 +854,7 @@ const json = function (colors) {
                 </shadow>
             </value>
         </block>
-        <block type="json_join_array">
+        <block type="json_merge_array">
         </block>
         <block type="json_has_item">
             <value name="ITEM">
