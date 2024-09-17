@@ -145,6 +145,8 @@ const GUIComponent = props => {
         onTelemetryModalOptOut,
         securityManager,
         showComingSoon,
+        showOpenFilePicker,
+        showSaveFilePicker,
         soundsTabVisible,
         stageSizeMode,
         targetIsStage,
@@ -305,6 +307,8 @@ const GUIComponent = props => {
                     logo={logo}
                     renderLogin={renderLogin}
                     showComingSoon={showComingSoon}
+                    showOpenFilePicker={showOpenFilePicker}
+                    showSaveFilePicker={showSaveFilePicker}
                     onClickAbout={onClickAbout}
                     onClickAccountNav={onClickAccountNav}
                     onClickAddonSettings={onClickAddonSettings}
@@ -522,6 +526,8 @@ GUIComponent.propTypes = {
     renderLogin: PropTypes.func,
     securityManager: PropTypes.shape({}),
     showComingSoon: PropTypes.bool,
+    showOpenFilePicker: PropTypes.func,
+    showSaveFilePicker: PropTypes.func,
     soundsTabVisible: PropTypes.bool,
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     targetIsStage: PropTypes.bool,
